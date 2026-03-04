@@ -1,0 +1,18 @@
+services:
+  ragingester:
+    build: .
+    env_file: .env-local
+    volumes:
+      - ./data:/data:ro
+      - ./testcases:/app/testcases:ro
+      - ./reports:/app/reports
+      - /var/run/docker.sock:/var/run/docker.sock
+      # For local development: place override.env and ragchecker.env in ./config/
+      - ./config/override.env:/config/override.env:ro
+      - ./config/ragchecker.env:/config/ragchecker.env:ro
+    networks:
+      - aibox_network
+
+networks:
+  aibox_network:
+    external: true

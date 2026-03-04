@@ -1,0 +1,17 @@
+services:
+  ragingester:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/data:ro
+      - ./testcases:/app/testcases:ro
+      - ./reports:/app/reports
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/lightrag/override.env:/config/override.env:ro
+      - /opt/ragchecker/ragchecker.env:/config/ragchecker.env:ro
+    networks:
+      - aibox_network
+
+networks:
+  aibox_network:
+    external: true
