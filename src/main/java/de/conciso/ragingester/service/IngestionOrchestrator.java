@@ -140,8 +140,9 @@ public class IngestionOrchestrator {
         if (!Files.isDirectory(directory)) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
-        try (Stream<Path> stream = Files.list(directory)) {
+        try (Stream<Path> stream = Files.walk(directory)) {
             return stream
+                    .filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".pdf"))
                     .sorted()
                     .toList();

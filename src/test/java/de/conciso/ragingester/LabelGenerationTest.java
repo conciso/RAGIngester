@@ -51,10 +51,9 @@ class LabelGenerationTest {
     }
 
     @Test
-    void directoryName_matchesLabelSuffix_withoutLeadingP() {
+    void labelSuffix_startsWithP() {
         for (PoisoningStage stage : PoisoningStage.values()) {
-            // labelSuffix is "p" + directoryName  (e.g. directoryName="01pct", labelSuffix="p01pct")
-            assertThat(stage.labelSuffix()).isEqualTo("p" + stage.directoryName());
+            assertThat(stage.labelSuffix()).startsWith("p");
         }
     }
 }

@@ -21,7 +21,7 @@ public enum PoisoningStage {
     P06PCT  ("06pct",  "p06pct",    6.0),
     P08PCT  ("08pct",  "p08pct",    8.0),
     P10PCT  ("10pct",  "p10pct",   10.0),
-    P175PCT ("175pct", "p175pct",  17.5),
+    P175PCT ("17pct",  "p175pct",  17.5),
     P25PCT  ("25pct",  "p25pct",   25.0),
     P50PCT  ("50pct",  "p50pct",   50.0),
     P75PCT  ("75pct",  "p75pct",   75.0),
