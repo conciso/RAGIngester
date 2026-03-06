@@ -24,7 +24,7 @@ class LabelGenerationTest {
             "P06PCT,  param_run_001_p06pct",
             "P08PCT,  param_run_001_p08pct",
             "P10PCT,  param_run_001_p10pct",
-            "P175PCT, param_run_001_p175pct",
+            "P17PCT,  param_run_001_p17pct",
             "P25PCT,  param_run_001_p25pct",
             "P50PCT,  param_run_001_p50pct",
             "P75PCT,  param_run_001_p75pct",

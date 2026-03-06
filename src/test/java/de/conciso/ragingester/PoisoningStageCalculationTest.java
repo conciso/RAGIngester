@@ -24,7 +24,7 @@ class PoisoningStageCalculationTest {
             "P06PCT,   6.0,   4",
             "P08PCT,   8.0,   6",
             "P10PCT,  10.0,   7",
-            "P175PCT, 17.5,  12",
+            "P17PCT,  17.5,  12",
             "P25PCT,  25.0,  16",
             "P50PCT,  50.0,  32",
             "P75PCT,  75.0,  48",

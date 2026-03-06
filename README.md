@@ -28,7 +28,7 @@ Die Stufenverzeichnisse sind **kumulativ** – jedes Verzeichnis enthält alle v
 | P06PCT      | `06pct`     | `p06pct`     | 6 %                    |
 | P08PCT      | `08pct`     | `p08pct`     | 8 %                    |
 | P10PCT      | `10pct`     | `p10pct`     | 10 %                   |
-| P175PCT     | `17pct`     | `p175pct`    | 17,5 %                 |
+| P17PCT      | `17pct`     | `p17pct`     | 17,5 %                 |
 | P25PCT      | `25pct`     | `p25pct`     | 25 %                   |
 | P50PCT      | `50pct`     | `p50pct`     | 50 %                   |
 | P75PCT      | `75pct`     | `p75pct`     | 75 %                   |
@@ -89,8 +89,8 @@ Alle Einstellungen werden über Umgebungsvariablen gesetzt. Spring Boot mappt si
 |---------------------------------------|----------------------------|---------------------------------------|
 | `RAGINGESTER_CLEAN_DOCS_PATH`         | `/data/clean`              | Pfad zu den sauberen PDFs             |
 | `RAGINGESTER_POISONED_DOCS_PATH`      | `/data/poisoned`           | Pfad zum Poisoning-Wurzelverzeichnis  |
-| `RAGINGESTER_TESTCASES_PATH`          | `/app/testcases`           | Testfall-Verzeichnis für RAGChecker   |
-| `RAGINGESTER_REPORTS_PATH`            | `/app/reports`             | Report-Ausgabeverzeichnis             |
+| `RAGINGESTER_TESTCASES_PATH`          | `/app/testcases`           | **Host-Pfad** zum Testfall-Verzeichnis — wird direkt als Volume in den RAGChecker-Container gemountet |
+| `RAGINGESTER_REPORTS_PATH`            | `/app/reports`             | **Host-Pfad** zum Report-Verzeichnis — wird direkt als Volume in den RAGChecker-Container gemountet  |
 | `RAGINGESTER_OVERRIDE_ENV_PATH`       | `/config/override.env`     | LightRAG override.env für RAGChecker  |
 | `RAGINGESTER_RAGCHECKER_IMAGE`        | `ragchecker:latest`        | Docker-Image für RAGChecker           |
 | `RAGINGESTER_RAGCHECKER_ENV_FILE`     | `/config/ragchecker.env`   | Env-File für den RAGChecker-Container |
@@ -132,11 +132,11 @@ docker compose -f docker-compose-local.yml up --build
 
 Mounts für den lokalen Compose:
 - `./data` → `/data` (read-only)
-- `./testcases` → `/app/testcases` (read-only)
-- `./reports` → `/app/reports`
 - `./config/override.env` → `/config/override.env` (read-only)
 - `./config/ragchecker.env` → `/config/ragchecker.env` (read-only)
 - `/var/run/docker.sock` → `/var/run/docker.sock`
+
+> **Hinweis:** `testcases/` und `reports/` werden **nicht** in den RAGIngester-Container gemountet. RAGIngester übergibt die Host-Pfade (`RAGINGESTER_TESTCASES_PATH`, `RAGINGESTER_REPORTS_PATH`) direkt als Volume-Argumente an `docker run`, sodass der Docker-Daemon sie unmittelbar in den RAGChecker-Container mountet. Die Pfade müssen daher auf dem Docker-Host existieren — z. B. das `testcases/`- und `reports/`-Verzeichnis aus dem RAGChecker-Repo.
 
 ---
 
