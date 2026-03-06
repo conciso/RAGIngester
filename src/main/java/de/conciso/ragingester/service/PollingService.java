@@ -3,6 +3,7 @@ package de.conciso.ragingester.service;
 import de.conciso.ragingester.config.RagIngesterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,13 +24,14 @@ public class PollingService {
     private final Supplier<Instant> clock;
 
     /** Production constructor – wired by Spring. */
+    @Autowired
     public PollingService(LightRagClient lightRagClient, RagIngesterProperties props) {
         this(lightRagClient, props.pollingTimeoutMinutes(), DEFAULT_POLL_INTERVAL_MS, Instant::now);
     }
 
-    /** Package-private constructor for unit tests. */
-    PollingService(LightRagClient lightRagClient, int timeoutMinutes, long pollIntervalMs,
-                   Supplier<Instant> clock) {
+    /** Visible for testing. */
+    public PollingService(LightRagClient lightRagClient, int timeoutMinutes, long pollIntervalMs,
+                          Supplier<Instant> clock) {
         this.lightRagClient = lightRagClient;
         this.timeoutMinutes = timeoutMinutes;
         this.pollIntervalMs = pollIntervalMs;

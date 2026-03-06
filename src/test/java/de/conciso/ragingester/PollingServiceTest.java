@@ -79,8 +79,6 @@ class PollingServiceTest {
 
     @Test
     void throwsPollingTimeoutException_whenDeadlineExceeded() {
-        when(lightRagClient.getTotalDocumentCount()).thenReturn(0); // never enough
-
         // Clock always returns a time already past the deadline:
         // deadline = base + 0 * 60 = base; first check: base.isBefore(base) = false
         Instant base = Instant.parse("2024-01-01T12:00:00Z");

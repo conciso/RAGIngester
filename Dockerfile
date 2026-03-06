@@ -6,12 +6,13 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn package -DskipTests -B
 
+# ---- Docker CLI stage (just the binary) ----
+FROM docker:27-cli AS docker-cli
+
 # ---- Runtime stage ----
 FROM eclipse-temurin:21-jre
-# Install Docker CLI so the container can run "docker run ..." against the host socket
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends docker.io \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the Docker CLI binary from the official docker:cli image
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
