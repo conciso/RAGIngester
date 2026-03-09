@@ -39,6 +39,12 @@ public record RagIngesterProperties(
         int pollingTimeoutMinutes,
 
         /** RAGINGESTER_DRY_RUN (default: false) – log only, no uploads/docker calls */
-        boolean dryRun
+        boolean dryRun,
+
+        /**
+         * RAGINGESTER_STAGES – comma-separated list of stage names to run,
+         * e.g. "P25PCT,P50PCT". Empty list = run all stages (default).
+         */
+        java.util.List<de.conciso.ragingester.model.PoisoningStage> stages
 ) {
 }

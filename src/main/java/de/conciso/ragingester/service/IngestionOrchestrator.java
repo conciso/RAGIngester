@@ -72,7 +72,11 @@ public class IngestionOrchestrator {
         // ---- 3. Progressive poisoning stages ----
         Set<String> uploadedPoisonedNames = new HashSet<>();
 
-        for (PoisoningStage stage : PoisoningStage.values()) {
+        List<PoisoningStage> stagesToRun = (props.stages() == null || props.stages().isEmpty())
+                ? List.of(PoisoningStage.values())
+                : props.stages();
+
+        for (PoisoningStage stage : stagesToRun) {
             Path stageDir = Path.of(props.poisonedDocsPath(), stage.directoryName());
 
             if (!Files.isDirectory(stageDir)) {
