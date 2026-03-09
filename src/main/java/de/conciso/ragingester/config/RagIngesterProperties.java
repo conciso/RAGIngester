@@ -14,6 +14,9 @@ public record RagIngesterProperties(
         /** RAGINGESTER_RUN_GROUP – e.g. "param_run_001" (required) */
         String runGroup,
 
+        /** RAGINGESTER_RUN_LABEL – preset label forwarded from env-tester (optional) */
+        String runLabel,
+
         /** RAGINGESTER_CLEAN_DOCS_PATH (default: /data/clean) */
         String cleanDocsPath,
 
@@ -45,6 +48,13 @@ public record RagIngesterProperties(
          * RAGINGESTER_STAGES – comma-separated list of stage names to run,
          * e.g. "P25PCT,P50PCT". Empty list = run all stages (default).
          */
-        java.util.List<de.conciso.ragingester.model.PoisoningStage> stages
+        java.util.List<de.conciso.ragingester.model.PoisoningStage> stages,
+
+        /**
+         * RAGINGESTER_RAGCHECKER_RUN_LABEL – query-preset label appended to every
+         * RAGCHECKER_RUN_LABEL for result attribution, e.g. "sweep-chunktopk-5".
+         * Optional; omitted when blank.
+         */
+        String ragcheckerRunLabel
 ) {
 }

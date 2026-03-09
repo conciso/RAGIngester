@@ -66,8 +66,7 @@ public class IngestionOrchestrator {
         waitForIndexing(expectedTotal);
 
         // ---- 2. RAGChecker — clean baseline ----
-        String cleanLabel = props.runGroup() + "_clean";
-        runCheckerIfNotDryRun(cleanLabel);
+        runCheckerIfNotDryRun(buildLabel("_clean"));
 
         // ---- 3. Progressive poisoning stages ----
         Set<String> uploadedPoisonedNames = new HashSet<>();
@@ -100,7 +99,7 @@ public class IngestionOrchestrator {
             expectedTotal = cleanDocs.size() + allDocsInStage.size();
             waitForIndexing(expectedTotal);
 
-            runCheckerIfNotDryRun(stage.label(props.runGroup()));
+            runCheckerIfNotDryRun(buildLabel("_" + stage.labelSuffix()));
         }
 
         log.info("=== RAGIngester run completed successfully ===");
@@ -138,6 +137,16 @@ public class IngestionOrchestrator {
             return;
         }
         dockerService.runRagChecker(props.runGroup(), label);
+    }
+
+    private String buildLabel(String suffix) {
+        String base = (props.runLabel() != null && !props.runLabel().isBlank())
+                ? props.runGroup() + "_" + props.runLabel()
+                : props.runGroup();
+        String label = base + suffix;
+        return (props.ragcheckerRunLabel() != null && !props.ragcheckerRunLabel().isBlank())
+                ? label + "_" + props.ragcheckerRunLabel()
+                : label;
     }
 
     private List<Path> listPdfFiles(Path directory) throws IOException {

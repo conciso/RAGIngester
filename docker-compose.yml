@@ -2,11 +2,13 @@ services:
   ragingester:
     build: .
     env_file: .env
+    environment:
+      - RAGINGESTER_RUN_GROUP
+      - RAGINGESTER_RUN_LABEL
     volumes:
       - ./data:/data:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/lightrag/override.env:/config/override.env:ro
-      - /opt/ragchecker/ragchecker.env:/config/ragchecker.env:ro
+      - /home/spark-642e/opt/RAGChecker/.env:/config/ragchecker.env:ro
     networks:
       - aibox_network
 

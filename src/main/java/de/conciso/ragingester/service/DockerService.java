@@ -57,7 +57,6 @@ public class DockerService {
                 "-e", "RAGCHECKER_RUN_LABEL=" + label,
                 "-v", props.testcasesPath() + ":/app/testcases:ro",
                 "-v", props.reportsPath() + ":/app/reports",
-                "-v", props.overrideEnvPath() + ":/config/override.env:ro",
                 props.ragcheckerImage()
         ));
 
